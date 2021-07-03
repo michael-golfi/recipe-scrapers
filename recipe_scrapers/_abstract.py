@@ -21,6 +21,7 @@ class AbstractScraper:
     def __init__(
         self,
         url,
+        page_data = None,
         proxies: Optional[str] = None,  # allows us to specify optional proxy server
         timeout: Optional[
             Union[float, Tuple, None]
@@ -30,7 +31,7 @@ class AbstractScraper:
         if settings.TEST_MODE:  # when testing, we load a file
             page_data = url.read()
             url = "https://test.example.com/"
-        else:
+        elif page_data is None:
             page_data = requests.get(
                 url, headers=HEADERS, proxies=proxies, timeout=timeout
             ).content
